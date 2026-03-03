@@ -1,81 +1,69 @@
 <article
-  class="rounded-2xl bg-white p-5 shadow-md ring-1 ring-slate-200 sm:p-6"
+  class="app-panel-card voice-panel-card"
+  [style.--tone-light]="selectedTone.light"
+  [style.--tone-mid]="selectedTone.mid"
+  [style.--tone-deep]="selectedTone.deep"
+  [style.--tone-text]="selectedTone.text"
 >
-  <h3 class="text-lg font-semibold text-slate-900">Deteccion por voz</h3>
-  <p class="mt-1 text-sm text-slate-600">
-    Dicta la serie para procesarla en el flujo de voz.
-  </p>
-
-  <div class="mt-4 space-y-3">
-    <div class="flex items-center justify-between gap-2">
-      <span class="text-xs font-semibold uppercase tracking-wide text-slate-500"
-        >Denominación</span
-      >
-      <span
-        class="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700"
-        >Serie: B</span
-      >
+  <header class="app-row-between">
+    <div>
+      <h3 class="app-panel-title">Deteccion por voz</h3>
+      <p class="app-panel-subtitle">Dicta la serie y valida segun la denominacion del billete.</p>
     </div>
-    <div class="grid grid-cols-3 gap-2 rounded-xl bg-slate-100 p-1">
+    <span class="app-series-badge">Serie B</span>
+  </header>
+
+  <section class="voice-section">
+    <div class="app-row-between">
+      <span class="app-section-label">Selecciona la denominacion</span>
+    </div>
+    <div class="app-denomination-grid">
       @for (option of denominationOptions; track option) {
         <button
           type="button"
+          class="app-denomination-chip"
+          [class.is-selected]="denominationSelected === option"
+          [style.--chip-light]="denominationPalette[option].light"
+          [style.--chip-mid]="denominationPalette[option].mid"
+          [style.--chip-deep]="denominationPalette[option].deep"
+          [style.--chip-text]="denominationPalette[option].text"
           (click)="denominationSelected = option"
-          class="rounded-lg px-2 py-2 text-xs font-semibold transition sm:text-sm"
-          [class.bg-white]="denominationSelected === option"
-          [class.text-slate-900]="denominationSelected === option"
-          [class.shadow]="denominationSelected === option"
-          [class.text-slate-600]="denominationSelected !== option"
         >
-          {{ option }}
+          <span class="app-denomination-value">{{ option }} Bs</span>
         </button>
       }
     </div>
-  </div>
+  </section>
 
   <button
     type="button"
     (click)="toggleListening()"
     [disabled]="isSpeechUnsupported || warmingUp"
-    class="mt-4 w-full rounded-xl px-4 py-3 text-sm font-semibold text-white transition disabled:cursor-not-allowed disabled:bg-slate-400"
-    [class.bg-emerald-600]="!isVoiceActive"
-    [class.hover:bg-emerald-500]="!isVoiceActive"
-    [class.bg-rose-600]="isVoiceActive"
-    [class.hover:bg-rose-500]="isVoiceActive"
+    class="app-btn voice-toggle-btn"
+    [class.is-listening]="isVoiceActive"
   >
+    <span class="voice-toggle-dot"></span>
     {{ buttonLabel }}
   </button>
 
   @if (warmingUp) {
-    <p class="mt-3 text-sm font-medium text-amber-700">
-      Preparando microfono...
-    </p>
+    <p class="voice-status voice-status-warm">Preparando microfono...</p>
   }
 
   @if (listening) {
-    <p class="mt-3 text-sm font-medium text-emerald-700">Escuchando...</p>
+    <p class="voice-status voice-status-live">Escuchando...</p>
   }
 
   @if (isSpeechUnsupported) {
-    <p
-      class="mt-3 rounded-xl border border-amber-300 bg-amber-50 px-3 py-2 text-sm text-amber-800"
-    >
+    <p class="app-warning-box">
       Tu navegador no soporta reconocimiento de voz.
     </p>
   }
 
-  <section class="mt-4 rounded-xl border border-slate-200 bg-slate-50 p-4">
-    <p class="text-xs font-semibold uppercase tracking-wide text-slate-500">
-      Transcripción (raw)
-    </p>
-    <p class="mt-2 min-h-10 text-sm text-slate-700">
-      {{ transcript || "Sin transcripción aún." }}
-    </p>
-    <p
-      class="mt-3 text-xs font-semibold uppercase tracking-wide text-slate-500"
-    >
-      Normalizado
-    </p>
-    <p class="mt-1 text-xs text-slate-600">{{ normalizedTranscript || "-" }}</p>
+  <section class="app-transcript-panel">
+    <p class="app-transcript-label">Transcripcion (raw)</p>
+    <p class="app-transcript-value">{{ transcript || "Sin transcripcion aun." }}</p>
+    <p class="app-transcript-label">Normalizado</p>
+    <p class="app-transcript-normalized">{{ normalizedTranscript || "-" }}</p>
   </section>
 </article>

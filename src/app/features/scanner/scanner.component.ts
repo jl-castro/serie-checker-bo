@@ -1,4 +1,4 @@
-import { NgClass, NgSwitch, NgSwitchCase } from '@angular/common';
+import { NgSwitch, NgSwitchCase } from '@angular/common';
 import { Component, signal } from '@angular/core';
 import { ScanResult } from '../../core/models/scan-result.model';
 import { ResultCardComponent } from '../../shared/components/result-card/result-card.component';
@@ -12,7 +12,6 @@ type ScannerMode = 'manual' | 'camera' | 'voice';
   selector: 'app-scanner',
   standalone: true,
   imports: [
-    NgClass,
     NgSwitch,
     NgSwitchCase,
     ManualPanelComponent,

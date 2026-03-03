@@ -1,3 +1,45 @@
 :host {
   display: block;
 }
+
+.voice-panel-card {
+  background-color: #ffffff;
+}
+
+.voice-section {
+  margin-top: 1rem;
+}
+
+.voice-toggle-btn {
+  background-color: #0f766e;
+  box-shadow: 0 6px 14px rgba(15, 118, 110, 0.25);
+  color: #f8fafc;
+  gap: 0.5rem;
+  margin-top: 1rem;
+}
+
+.voice-toggle-btn.is-listening {
+  background-color: #b91c1c;
+}
+
+.voice-toggle-dot {
+  background: rgba(255, 255, 255, 0.85);
+  border-radius: 9999px;
+  display: inline-block;
+  height: 0.55rem;
+  width: 0.55rem;
+}
+
+.voice-status {
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin: 0.6rem 0 0;
+}
+
+.voice-status-warm {
+  color: #9a5b06;
+}
+
+.voice-status-live {
+  color: #0f766e;
+}

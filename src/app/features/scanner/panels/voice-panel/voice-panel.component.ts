@@ -12,6 +12,12 @@ import {
 } from '../../../../shared/utils/web-speech.util';
 
 type DenominationOption = 10 | 20 | 50;
+type DenominationTone = {
+  light: string;
+  mid: string;
+  deep: string;
+  text: string;
+};
 
 @Component({
   selector: 'app-voice-panel',
@@ -21,6 +27,26 @@ type DenominationOption = 10 | 20 | 50;
 })
 export class VoicePanelComponent implements OnDestroy {
   readonly denominationOptions: DenominationOption[] = [10, 20, 50];
+  readonly denominationPalette: Record<DenominationOption, DenominationTone> = {
+    10: {
+      light: '#d8f3ff',
+      mid: '#5bb8da',
+      deep: '#0b5f87',
+      text: '#0a4f70'
+    },
+    20: {
+      light: '#ffe8ce',
+      mid: '#f2a255',
+      deep: '#a14d0d',
+      text: '#8f430a'
+    },
+    50: {
+      light: '#f4e5f4',
+      mid: '#be86b8',
+      deep: '#704069',
+      text: '#64355e'
+    }
+  };
   denominationSelected: DenominationOption = 10;
   transcript = '';
   normalizedTranscript = '';
@@ -128,6 +154,10 @@ export class VoicePanelComponent implements OnDestroy {
     }
 
     return 'Iniciar voz';
+  }
+
+  get selectedTone(): DenominationTone {
+    return this.denominationPalette[this.denominationSelected];
   }
 
   private initializeSpeechRecognition(): void {
