@@ -1,8 +1,14 @@
-export type ScanStatus = 'VALID' | 'INVALID' | 'UNKNOWN';
+export type ScanStatus = 'VALID' | 'INVALID' | 'UNKNOWN' | 'AMBIGUOUS';
 
 export interface ScanResult {
-  serial: number;
-  denomination?: number;
+  input: string;
+  series: string;
+  serialNumber?: number;
+  serialNormalized?: string;
+  denominationSelected?: 10 | 20 | 50 | 'AUTO';
+  denominationMatched?: number;
+  matches?: Array<{ denomination: number }>;
   status: ScanStatus;
   timestamp: number;
+  message: string;
 }

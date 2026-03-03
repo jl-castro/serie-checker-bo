@@ -1,2 +1,46 @@
-<h1>Scanner</h1>
-<p>Scanner placeholder content.</p>
+<section class="mx-auto flex w-full max-w-2xl flex-col gap-6 px-4 py-6 sm:px-6 sm:py-8">
+  <header class="rounded-2xl bg-slate-900 p-6 text-slate-50 shadow-lg shadow-slate-900/20">
+    <p class="text-xs uppercase tracking-[0.18em] text-slate-300">Serie Checker</p>
+    <h1 class="mt-2 text-2xl font-bold sm:text-3xl">Verificacion de series</h1>
+    <p class="mt-2 text-sm text-slate-200">
+      Selecciona un modo para ingresar la serie del billete y revisar su estado.
+    </p>
+  </header>
+
+  <div class="rounded-2xl bg-white p-1 shadow-md ring-1 ring-slate-200">
+    <nav class="grid grid-cols-3 gap-1">
+      @for (option of modeOptions; track option.key) {
+        <button
+          type="button"
+          (click)="setMode(option.key)"
+          class="rounded-xl px-3 py-2 text-sm font-semibold transition"
+          [ngClass]="
+            mode() === option.key
+              ? 'bg-slate-900 text-white shadow'
+              : 'text-slate-600 hover:bg-slate-100'
+          "
+        >
+          {{ option.label }}
+        </button>
+      }
+    </nav>
+  </div>
+
+  <section [ngSwitch]="mode()">
+    <app-manual-panel *ngSwitchCase="'manual'" (result)="onManualResult($event)" />
+    <app-camera-panel *ngSwitchCase="'camera'" />
+    <app-voice-panel *ngSwitchCase="'voice'" />
+  </section>
+
+  <section class="space-y-3">
+    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Resultado actual</h2>
+    <app-result-card
+      [status]="displayedResult().status"
+      [series]="displayedResult().series"
+      [serialNormalized]="displayedResult().serialNormalized"
+      [denominationMatched]="displayedResult().denominationMatched"
+      [matches]="displayedResult().matches"
+      [message]="displayedResult().message"
+    />
+  </section>
+</section>

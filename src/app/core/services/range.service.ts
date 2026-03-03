@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, map } from 'rxjs';
+import { Observable, tap, map, of } from 'rxjs';
 import { BillRange } from '../models/range.model';
 
 interface RangesResponse {
@@ -32,5 +32,13 @@ export class RangeService {
 
   isLoaded(): boolean {
     return this.snapshot.length > 0;
+  }
+
+  loadOnce(): Observable<BillRange[]> {
+    if (this.isLoaded()) {
+      return of(this.snapshot);
+    }
+
+    return this.load();
   }
 }
