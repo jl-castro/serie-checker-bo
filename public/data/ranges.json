@@ -1,5 +1,8 @@
 {
   "lastUpdated": "2026-03-03",
   "currency": "BOB",
-  "ranges": []
+  "ranges": [
+    { "denomination": 10, "series": "B", "from": 77100001, "to": 77550000 },
+    { "denomination": 20, "series": "B", "from": 87280145, "to": 91646549 }
+  ]
 }
