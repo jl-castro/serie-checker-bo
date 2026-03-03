@@ -29,18 +29,19 @@
   <section [ngSwitch]="mode()">
     <app-manual-panel *ngSwitchCase="'manual'" (result)="onManualResult($event)" />
     <app-camera-panel *ngSwitchCase="'camera'" />
-    <app-voice-panel *ngSwitchCase="'voice'" />
+    <app-voice-panel *ngSwitchCase="'voice'" (result)="onVoiceResult($event)" />
   </section>
 
-  <section class="space-y-3">
-    <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Resultado actual</h2>
-    <app-result-card
-      [status]="displayedResult().status"
-      [series]="displayedResult().series"
-      [serialNormalized]="displayedResult().serialNormalized"
-      [denominationMatched]="displayedResult().denominationMatched"
-      [matches]="displayedResult().matches"
-      [message]="displayedResult().message"
-    />
-  </section>
+  @if (currentResult(); as result) {
+    <section class="space-y-3">
+      <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-500">Resultado actual</h2>
+      <app-result-card
+        [status]="result.status"
+        [series]="result.series"
+        [serialNormalized]="result.serialNormalized"
+        [denominationMatched]="result.denominationMatched"
+        [message]="result.message"
+      />
+    </section>
+  }
 </section>

@@ -1,5 +1,5 @@
 import { NgClass, NgSwitch, NgSwitchCase } from '@angular/common';
-import { Component, computed, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ScanResult } from '../../core/models/scan-result.model';
 import { ResultCardComponent } from '../../shared/components/result-card/result-card.component';
 import { CameraPanelComponent } from './panels/camera-panel/camera-panel.component';
@@ -25,14 +25,7 @@ type ScannerMode = 'manual' | 'camera' | 'voice';
 })
 export class ScannerComponent {
   readonly mode = signal<ScannerMode>('manual');
-  readonly currentResult = signal<ScanResult>({
-    input: '',
-    series: 'B',
-    denominationSelected: 'AUTO',
-    status: 'UNKNOWN',
-    timestamp: Date.now(),
-    message: 'Ingresa un número para verificar.'
-  });
+  readonly currentResult = signal<ScanResult | null>(null);
 
   readonly modeOptions: Array<{ key: ScannerMode; label: string }> = [
     { key: 'manual', label: 'Manual' },
@@ -40,26 +33,15 @@ export class ScannerComponent {
     { key: 'voice', label: 'Voz' }
   ];
 
-  readonly mockResult: ScanResult = {
-    input: '00000000 B',
-    series: 'B',
-    serialNumber: 0,
-    serialNormalized: '000000000',
-    denominationSelected: 'AUTO',
-    timestamp: Date.now(),
-    status: 'UNKNOWN' as const,
-    message: 'Aún no se realizó ninguna verificación.'
-  };
-
-  readonly displayedResult = computed(() =>
-    this.mode() === 'manual' ? this.currentResult() : this.mockResult
-  );
-
   setMode(mode: ScannerMode): void {
     this.mode.set(mode);
   }
 
   onManualResult(result: ScanResult): void {
+    this.currentResult.set(result);
+  }
+
+  onVoiceResult(result: ScanResult): void {
     this.currentResult.set(result);
   }
 }

@@ -7,7 +7,7 @@
       <span class="text-xs font-semibold uppercase tracking-wide text-slate-500">Denominación</span>
       <span class="rounded-full bg-slate-100 px-2 py-1 text-xs font-semibold text-slate-700">Serie: B</span>
     </div>
-    <div class="grid grid-cols-4 gap-2 rounded-xl bg-slate-100 p-1">
+    <div class="grid grid-cols-3 gap-2 rounded-xl bg-slate-100 p-1">
       @for (option of denominationOptions; track option) {
         <button
           type="button"
@@ -18,7 +18,7 @@
           [class.shadow]="denominationSelected === option"
           [class.text-slate-600]="denominationSelected !== option"
         >
-          {{ option === 'AUTO' ? 'Auto' : option }}
+          {{ option }}
         </button>
       }
     </div>
@@ -30,10 +30,14 @@
       id="serial-input"
       type="text"
       [(ngModel)]="serialInput"
+      (ngModelChange)="onSerialInputChange($event)"
+      inputmode="numeric"
+      pattern="[0-9]*"
+      maxlength="9"
       placeholder="77100001"
       class="w-full rounded-xl border border-slate-300 bg-slate-50 px-4 py-3 text-sm outline-none transition focus:border-slate-500 focus:ring-2 focus:ring-slate-300"
     />
-    <p class="text-xs text-slate-500">Ej: 77100001 o 77100001B</p>
+    <p class="text-xs text-slate-500">Ej: 77100001</p>
     <button
       type="button"
       (click)="verify()"

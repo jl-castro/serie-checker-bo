@@ -14,7 +14,6 @@ export class ResultCardComponent {
   @Input({ required: true }) series!: string;
   @Input() serialNormalized?: string;
   @Input() denominationMatched?: number;
-  @Input() matches?: Array<{ denomination: number }>;
   @Input({ required: true }) message!: string;
 
   get statusClass(): string {
@@ -24,10 +23,6 @@ export class ResultCardComponent {
 
     if (this.status === 'INVALID') {
       return 'bg-rose-100 text-rose-800 ring-rose-200';
-    }
-
-    if (this.status === 'AMBIGUOUS') {
-      return 'bg-orange-100 text-orange-800 ring-orange-200';
     }
 
     return 'bg-amber-100 text-amber-800 ring-amber-200';

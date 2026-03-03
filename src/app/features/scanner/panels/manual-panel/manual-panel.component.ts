@@ -4,7 +4,7 @@ import { ScanResult } from '../../../../core/models/scan-result.model';
 import { RangeService } from '../../../../core/services/range.service';
 import { ValidationService } from '../../../../core/services/validation.service';
 
-type DenominationSelection = 10 | 20 | 50 | 'AUTO';
+type DenominationSelection = 10 | 20 | 50;
 
 @Component({
   selector: 'app-manual-panel',
@@ -15,8 +15,8 @@ type DenominationSelection = 10 | 20 | 50 | 'AUTO';
 })
 export class ManualPanelComponent {
   serialInput = '';
-  denominationSelected: DenominationSelection = 'AUTO';
-  readonly denominationOptions: DenominationSelection[] = [10, 20, 50, 'AUTO'];
+  denominationSelected: DenominationSelection = 10;
+  readonly denominationOptions: DenominationSelection[] = [10, 20, 50];
   @Output() result = new EventEmitter<ScanResult>();
 
   constructor(
@@ -33,5 +33,9 @@ export class ManualPanelComponent {
       );
       this.result.emit(scanResult);
     });
+  }
+
+  onSerialInputChange(value: string): void {
+    this.serialInput = value.replace(/\D/g, '').slice(0, 9);
   }
 }
